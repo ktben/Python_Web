@@ -1,0 +1,130 @@
+* {
+    font-family: Tahoma;
+}
+
+h1.subject{
+    text-align: center;
+}
+
+body {
+    background-color: lightblue;
+    color:darkblue;
+}
+
+table.product{
+    border-collapse: collapse;
+    width:100%;
+}
+
+.container{
+    width:80%;
+    margin: 0 auto;
+}
+
+table td{
+    text-align: center;
+}
+
+.slide-show{
+    width: 1150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slide-show-2{
+    width:1150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.list-images, .list-images-2{
+    display:flex;
+    transform: translateX();
+    transition: 0.8s;
+
+}
+
+.list-images img{
+    width: 555px;
+    height:300px;
+}
+
+.list-images-2 img{
+    width: 230px;
+    height: 250px;
+}
+
+.list-images .images-group{
+    display:flex;
+    border-radius: 20px;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.list-images-2{
+    display:flex;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.btns .btn{
+    font-size: 40px;
+    color: #999;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 0.5s;
+    cursor:pointer;
+    background-color: lightgrey;
+    opacity: 0.4;
+    border-radius: 30%;
+}
+
+.btns .btn:hover{
+    color: #fff;
+}
+
+.btn-left, .btn-left-2{
+    left: 0;
+}
+
+.btn-right, btn-right-2{
+    right: 0;
+}
+
+.bg-video a{
+  position: relative; /* Ensures video stays behind content */
+  top: 0;
+  width: 100%;
+  height: 50vh;
+
+}
+
+#myVideo, #myVideo2 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Scales video to fill container */
+}
+
+.intro-img{
+    z-index: 1;
+}
+
+.best-seller{
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.row-1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;    
+}
+
+.discount{
+    background-color: #FDF2C7;
+    color: #F50202;
+    margin-left: 5px;
+    border-radius: 5px;
+    padding: 4px;
+}

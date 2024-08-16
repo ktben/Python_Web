@@ -1,0 +1,37 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Đăng nhập người dùng{% endblock %}
+
+
+{% block content %}
+<br>
+
+<h1 class="text-center text-danger">ĐĂNG NHẬP NGƯỜI DÙNG</h1>
+
+<div class="container">
+    {% if err_msg %}
+    <div class="alert alert-danger">
+        <h3>{{err_msg}}</h3>
+    </div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="username" >Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="pass" >Mật khẩu</label>
+            <input type="password" class="form-control" id="pass" name="password" required>
+        </div>
+        <input type="submit" value="Đăng nhập" class="btn btn-danger">
+         <a class = "btn btn-primary" href="{{url_for('face_recognize', next = request.args.get('next')) }}">Đăng nhập bằng face ID</a>
+
+    </form>
+    <br>
+    <!--<button class="btn btn-info" onclick="{{ url_for('face_recognize') }}">Dang nhap bang face ID</button>-->
+
+    <br>
+    <br>
+</div>
+{% endblock %}
+

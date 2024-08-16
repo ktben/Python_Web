@@ -1,0 +1,89 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Giỏ hàng{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<div class="container">
+    <h1 class="text-center text-danger">GIỎ HÀNG</h1>
+    <br>
+    {% if 'cart' in session and session['cart'] %}
+    <table class="table table-hover">
+        <tr style="font-weight:bold">
+            <td></td>
+            <td>Tên sản phẩm</td>
+            <td>Đơn giá</td>
+            <td>Số lượng</td>
+            <th></th>
+        </tr>
+
+        {% for c in session['cart'].values() %}
+        <tr id="product{{c.id}}">
+            <td><img src="{{url_for('static', filename=c.image)}}" alt="{{ c.name }}" style="max-height: 150px;"></td>
+            <td>{{c.name}}</td>
+            <td class="text text-danger font-weight-bold">{{"{:,.1f}".format(c.price)}}đ</td>
+            <td>
+                <div class="form-group">
+                    <input type="number"
+                           min="1"
+                           onblur="updateCart({{c.id}}, this)"
+                           value="{{c.quantity}}"
+                           class="form-control text-center">
+                </div>
+            </td>
+            <td>
+                <input type="button"
+                       onclick="deleteCart({{c.id}})"
+                       value="Xóa"
+                       class="btn btn-danger">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <br>
+    {% if current_user.is_authenticated %}
+    <form class="alert d-flex flex-column" style="background-color: lightgrey;">
+        <h4 class="font-weight-bold"><i class="fa fa-user"></i> Thông tin nhận hàng</h4>
+        <div class="form-group">
+            <h5><b>Username:</b> {{ current_user.username }}</h5>
+        </div>
+        <div class="form-group">
+            <h5><b>Họ tên người nhận:</b> </h5>
+            <input class="form-control" placeholder="Nhập họ tên ..." name="fullname" required>
+        </div>
+        <div class="form-group">
+            <h5><b>Số điện thoại:</b> </h5>
+            <input class="form-control" placeholder="Nhập số điện thoại ... " name="phone_number" required>
+        </div>
+        <div class="form-group">
+            <h5><b>Email:</b> {{ current_user.email }}</h5>
+        </div>
+
+    <hr>
+
+    {% endif %}
+    <div class="alert alert-info pay-info" style="border-radius: 5px;">
+        <h4 class="font-weight-bold"><i class="fa fa-list"></i> Chi tiết thanh toán</h4>
+        <h5>Tổng sản phẩm: <span class="cart-counter font-weight-bold">{{stats.total_quantity}}</span></h5>
+        <h5>Tổng tiền: <span class="font-weight-bold" id="total-amount">{{"{:,.1f}".format(stats.total_amount) }}đ</span></h5>
+    </div>
+
+    {% if current_user.is_authenticated  %}
+
+    <input type="submit" value="Thanh toán" onclick="pay(event)" class="btn btn-success bg-danger form-control font-weight-bold" style="border-radius: 5px;">
+    {% else %}
+    <a class="btn btn-danger form-control font-weight-bold" href="{{url_for('user_signin', next='cart')}}">Đăng nhập để thanh toán</a>
+    {% endif %}
+    </form>
+    <br><br>
+
+
+
+        {% else %}
+        <h1 class="text-center mt-5"><i>Không có sản phẩm nào trong giỏ hàng</i></h1>
+        {% endif %}
+
+</div>
+{% endblock %}

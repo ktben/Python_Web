@@ -1,0 +1,99 @@
+<nav class="navbar bg-dark navbar-expand-md navbar-dark d-flex flex-column" style="z-index: 1">
+  <!-- Brand -->
+
+<div class="row-1">
+    <div class="mr-5">
+        <a class="navbar-brand font-italic" href="/">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" style="width:70px;">
+            AANT WEBSITE
+        </a>
+    </div>
+
+
+    <div class="d-flex flex-row ">
+        <form class="form-inline mr-5">
+            <div class="form-group">
+              <input class="form-control mr-sm-2" name="kw" type="text" placeholder="Nhập từ khóa ... ">
+              <button class="btn btn-warning mr-sm-2" type="submit"><i class="fas fa-search"></i> Tìm kiếm</button>
+            </div>
+            {% if current_user.is_authenticated and current_user.face_id == 0 %}
+            <div class="form-group">
+              <a class = "btn btn-primary" href="{{ url_for('register_face_detect', user_id=current_user.id) }}"><i class="fas fa-users"></i> Đăng ký Face ID</a>
+            </div>
+            {% endif %}
+
+        </form>
+
+  <!-- Navbar links -->
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+
+          {% if current_user.is_authenticated %}
+          <li class="nav-item ">
+            <a class="nav-link text-danger" href="#">
+              {% if current_user.avatar %}
+                <img src="{{current_user.avatar}}" class="rounded-circle" width="40px" alt="{{current_user.name}}">
+              {% else %}
+                <img src="{{url_for('static', filename='images/iphone7.jpg')}}" class="rounded-circle" width="40px" alt="{{current_user.name}}">
+              {% endif %}
+              {{ current_user.username }}
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link text-success" href="{{url_for('user_signout')}}"><i class="fas fa-power-off"></i> Đăng xuất</a>
+          </li>
+
+          {% else %}
+          <li class="nav-item ">
+            <a class="nav-link text-danger" href="{{url_for('user_register')}}"><i class="fas fa-user-plus"></i> Đăng ký</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link text-success" href="{{url_for('user_signin')}}"><i class="fa fa-user-check"></i> Đăng nhập</a>
+          </li>
+          {% endif %}
+          <li class="nav-item ">
+        <!--url_for(define Python function)-->
+            <a class="nav-link text-success" href="{{url_for('cart')}}"><i class="fas fa-cart-plus"></i>
+              Giỏ hàng <span class="badge badge-info cart-counter">{{cart_stats.total_quantity}}</span>
+            </a>
+          </li>
+
+        </ul>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row-2">
+    <ul class="navbar-nav">
+        {% for c in categories %}
+        {% if c.id != 4 and c.id < 6 %}
+          <li class="nav-item {% if 'category_id' in request.args and c.id == request.args.category_id|int %}active{% endif %} ">
+            <a class="nav-link" href="{{url_for('home', category_id=c.id) }}">{{ c.name }}</a>
+          </li>
+        {% endif %}
+        {% endfor %}
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">
+            Phụ kiện
+          </a>
+          <div class="dropdown-menu bg-dark">
+             {% for c in categories %}
+             {% if c.id == 4 or c.id >= 6 %}
+                     <a class="dropdown-item text-light" href="{{ url_for('home', category_id=c.id) }}">{{ c.name }}</a>
+             {% endif %}
+              {% endfor %}
+          </div>
+        </li>
+    </ul>
+</div>
+<!--   &lt;!&ndash; Toggler/collapsibe Button &ndash;&gt;-->
+<!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">-->
+<!--    <span class="navbar-toggler-icon"></span>-->
+<!--  </button>-->
+
+
+
+</nav>
